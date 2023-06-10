@@ -2,7 +2,7 @@
 
 [Terraform Cloud](https://cloud.hashicorp.com/products/terraform) is a managed service offering by HashiCorp that eliminates the need for unnecessary tooling and documentation for practitioners, teams, and organizations to use Terraform in production. It allows you to provision infrastructure in a remote environment that is optimized for the Terraform workflow.
 
-In this blog, we will be creating Azure Infrastructure using Terraform and will be deploying it over to Azure using Terraform Cloud.
+In this project, we will be creating Azure Infrastructure using Terraform and will be deploying it over to Azure using Terraform Cloud.
 
 **Terraform Flow**
 - First you have the terraform code.
