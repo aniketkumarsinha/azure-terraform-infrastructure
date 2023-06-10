@@ -15,10 +15,10 @@ provider "azurerm" {
   skip_provider_registration = "true"
   
   # Connection to Azure
-  subscription_id = "d8cee4c6-1c47-4bf5-88df-00377f235dcd"
-  client_id = "8df250de-96d9-461b-b6eb-d55bf3a3e56d"
-  client_secret = "oYz8Q~~MWPP6ApBZ_PE3HeoNkuy9JHkIeN2Kbafi"
-  tenant_id = "84c31ca0-ac3b-4eae-ad11-519d80233e6f"
+  subscription_id = var.subscription_id
+  client_id = var.client_id
+  client_secret = var.client_secret
+  tenant_id = var.tenant_id
 }
 
 variable "prefix" {
