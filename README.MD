@@ -2,6 +2,10 @@
 
 ![Cover Image](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/c66wndih4aa43cf493vd.png)
 
+```
+Note: Tried of creating this doc as a demo with all process/steps in creating this project
+```
+
 ## What is Terraform?
 [Terraform](https://www.terraform.io/) is an infrastructure as code tool that lets you define both cloud and on-prem resources in human-readable configuration files that you can version, reuse, and share.
 
@@ -113,13 +117,13 @@ resource "azurerm_virtual_machine" "vm" {
 ![Image description](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/y949ss9lexpd5ridhozu.png)
 3. Create a Workspace.
 ![Image description](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/wdde76gof5yxc8vp1kpw.png)
- - Choose Version control workflow
+   - Choose Version control workflow
 ![Image description](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/n1gp6u6x1mez3kdvbt8n.png)
- - Connect to a version control provider
+   - Connect to a version control provider
 ![Image description](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/a8bat7opbkli0x9t1yrj.png)
- - Choose your Azure Infrastructure repository from your repository list. You can check the advance settings if you want to configure the workflow.
+   - Choose your Azure Infrastructure repository from your repository list. You can check the advance settings if you want to configure the workflow.
 ![Image description](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/kd5dop1al2pugnalmqew.png)
- - Tap on **Create Workspace** button to create your workspace in terraform cloud Or Start new run from workspace overview page.
+   - Tap on **Create Workspace** button to create your workspace in terraform cloud Or Start new run from workspace overview page.
 4. You can directly start your plan phase.
 ![Image description](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/ht6c0c2krj3o8wzmwgnk.png)
 5. You can verify in your projects page that your workspace has been created.
@@ -139,11 +143,11 @@ resource "azurerm_virtual_machine" "vm" {
 ![Image description](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/dja5n5a5hmppgm3alwsq.png)
 - So we have finally created our app.
 ![Image description](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/c42vlbil4aviwcvtwqck.png)
-- To connect our Infrastructure we need 4 details
- - Client Id
- - Client Secret
- - Tenant Id
- - Subscription Id
+- To connect our Infrastructure we need 4 details:
+  - Client Id
+  - Client Secret
+  - Tenant Id
+  - Subscription Id
 We would be getting this one by one.
 - `Application (client) ID` is Client Id.
   `Directory (tenant) ID` is Tenant Id.
@@ -223,14 +227,10 @@ Everything ran successfully!
 ![Image description](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/3fdkhg2fmcbwawd2skq9.png)
 
 Let's confirm over our Azure Portal too. 
-Yes we can all our resources present under our subscription.
+Yes we can see all our resources present under our subscription.
 ![Image description](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/eyp2ult5uid4uerv6tmp.png)
 
-🤩🤩🤩🤩🤩🤩🤩
 
-Damn!!!! We learnt so many things today. We first created the Terraform Infrastructure, setup our Terraform Cloud profile and then used it to deploy resources over Azure too. Now you can say you're a pro in Terraform and Terraform Cloud.
-
-Let me provide you a bonus happiness. So the project which we configured over Terraform Cloud, automatically runs the workflow any branch is merged to the main branch or any new pushes are done to main branch.
  
 
 
