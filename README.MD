@@ -1,4 +1,4 @@
-<center><h1>Deploy Azure Infrastructure using Terraform Cloud</h1></center>
+<div align="center"><h1>Deploy Azure Infrastructure using Terraform Cloud</h1></div>
 
 ![Cover Image](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/c66wndih4aa43cf493vd.png)
 
