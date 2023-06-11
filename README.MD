@@ -1,19 +1,24 @@
+![Cover Image](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/c66wndih4aa43cf493vd.png)
+
+**What is Terraform?**
 [Terraform](https://www.terraform.io/) is an infrastructure as code tool that lets you define both cloud and on-prem resources in human-readable configuration files that you can version, reuse, and share.
 
-[Terraform Cloud](https://cloud.hashicorp.com/products/terraform) is a managed service offering by HashiCorp that eliminates the need for unnecessary tooling and documentation for practitioners, teams, and organizations to use Terraform in production. It allows you to provision infrastructure in a remote environment that is optimized for the Terraform workflow.
-
-In this project, we will be creating Azure Infrastructure using Terraform and will be deploying it over to Azure using Terraform Cloud.
-
-**Terraform Flow**
+##### Terraform Flow
 - First you have the terraform code.
 - Then we have Terraform Plan phase. The terraform plan command creates an execution plan, which lets you preview the changes that Terraform plans to make to your infrastructure.
 - Terraform Apply phase executes the actions proposed in a Terraform plan.
 - And everything gets deployed over the CSP, here Azure.
 ![Image description](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/odtun8rbj9hgsb9brhuq.png)
 
+**What is Terraform Cloud?**
+[Terraform Cloud](https://cloud.hashicorp.com/products/terraform) is a managed service offering by HashiCorp that eliminates the need for unnecessary tooling and documentation for practitioners, teams, and organizations to use Terraform in production. It allows you to provision infrastructure in a remote environment that is optimized for the Terraform workflow.
+![Image description](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/7w2ijyuk5x6rrqy99gd1.png)
+
+In this project, we will be creating Azure Infrastructure using Terraform and will be deploying it over to Azure using Terraform Cloud.
+
 **Infrastructure Code**
 We are creating a VM and resources related to it. 
-<script src="https://gist.github.com/aniketkumarsinha/60fe4463ef0387602831dd8052ea381d.js"></script>
+{% gist https://gist.github.com/aniketkumarsinha/60fe4463ef0387602831dd8052ea381d %}
 
 **Setting up Terraform Cloud**
 
@@ -92,7 +97,8 @@ Ohhhhh!!!! ERROR AGAIN!!!!
 
 But we are still left with some more code :P
 We need to add variables.tf file mentioning about these variables.
-<script src="https://gist.github.com/aniketkumarsinha/e053e78122d4683567ad1327c818cea6.js"></script>
+{% gist https://gist.github.com/aniketkumarsinha/e053e78122d4683567ad1327c818cea6.js %}
+
 
 And now finally we can get the results from Plan and Apply phase. Let's rerun the pipeline.
 - Wohooo!! Our Plan phase ran successfully:
