@@ -1,26 +1,110 @@
 ![Cover Image](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/c66wndih4aa43cf493vd.png)
 
-**What is Terraform?**
+## What is Terraform?
 [Terraform](https://www.terraform.io/) is an infrastructure as code tool that lets you define both cloud and on-prem resources in human-readable configuration files that you can version, reuse, and share.
 
-##### Terraform Flow
+### Terraform Flow
 - First you have the terraform code.
 - Then we have Terraform Plan phase. The terraform plan command creates an execution plan, which lets you preview the changes that Terraform plans to make to your infrastructure.
 - Terraform Apply phase executes the actions proposed in a Terraform plan.
 - And everything gets deployed over the CSP, here Azure.
 ![Image description](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/odtun8rbj9hgsb9brhuq.png)
 
-**What is Terraform Cloud?**
+## What is Terraform Cloud?
 [Terraform Cloud](https://cloud.hashicorp.com/products/terraform) is a managed service offering by HashiCorp that eliminates the need for unnecessary tooling and documentation for practitioners, teams, and organizations to use Terraform in production. It allows you to provision infrastructure in a remote environment that is optimized for the Terraform workflow.
 ![Image description](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/7w2ijyuk5x6rrqy99gd1.png)
 
 In this project, we will be creating Azure Infrastructure using Terraform and will be deploying it over to Azure using Terraform Cloud.
 
-**Infrastructure Code**
+## Infrastructure Code
 We are creating a VM and resources related to it. 
-{% gist https://gist.github.com/aniketkumarsinha/60fe4463ef0387602831dd8052ea381d %}
+```
+# Configure Azure Provider
+terraform {
+  required_providers {
+     azurerm = {
+      source = "hashicorp/azurerm"
+      version = ">= 3.59.0"
+    } 
+  }
+  required_version = ">= 0.14.9"
+}
 
-**Setting up Terraform Cloud**
+provider "azurerm" {
+  features {}
+
+  skip_provider_registration = "true"
+}
+
+variable "prefix" {
+  default = "terraform"
+}
+
+resource "azurerm_resource_group" "rg" {
+  name     = "${var.prefix}-ResourceGroup"
+  location = "Central India"
+}
+
+resource "azurerm_virtual_network" "vnet" {
+  name                = "${var.prefix}-VNet"
+  address_space       = ["10.0.0.0/16"]
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
+}
+
+resource "azurerm_subnet" "internal" {
+  name                 = "${var.prefix}-internal"
+  resource_group_name  = azurerm_resource_group.rg.name
+  virtual_network_name = azurerm_virtual_network.vnet.name
+  address_prefixes     = ["10.0.2.0/24"]
+}
+
+resource "azurerm_network_interface" "nic" {
+  name                = "${var.prefix}-NIC"
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
+
+  ip_configuration {
+    name                          = "tfconfiguration1"
+    subnet_id                     = azurerm_subnet.internal.id
+    private_ip_address_allocation = "Dynamic"
+  }
+}
+
+resource "azurerm_virtual_machine" "vm" {
+  name                  = "${var.prefix}-vm"
+  location              = azurerm_resource_group.rg.location
+  resource_group_name   = azurerm_resource_group.rg.name
+  network_interface_ids = [azurerm_network_interface.nic.id]
+  vm_size               = "Standard_DS1_v2"
+
+  storage_image_reference {
+    publisher = "Canonical"
+    offer     = "UbuntuServer"
+    sku       = "16.04-LTS"
+    version   = "latest"
+  }
+  storage_os_disk {
+    name              = "myosdisk1"
+    caching           = "ReadWrite"
+    create_option     = "FromImage"
+    managed_disk_type = "Standard_LRS"
+  }
+  os_profile {
+    computer_name  = "hostname"
+    admin_username = "tfadmin"
+    admin_password = "Password1234!"
+  }
+  os_profile_linux_config {
+    disable_password_authentication = false
+  }
+  tags = {
+    environment = "staging"
+  }
+}
+```
+
+## Setting up Terraform Cloud
 
 1. Create Terraform Cloud Account - [Terraform Cloud](https://www.hashicorp.com/products/terraform)
 2. Create a Project in Terraform Cloud:
@@ -46,7 +130,7 @@ We are creating a VM and resources related to it.
    We are getting error in provider phase. The reason behind this is that we have authorized our infrastructure to connect and write over our Azure. We will be creating an App provide all the necessary details to our infrastructure.
 ![Image description](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/0178a4rs54hqgjtjam3o.png)
 
-**Authorizing Terraform Infrastructure to write over Azure**
+## Authorizing Terraform Infrastructure to write over Azure
 - We are creating an App over Azure to authorize using Client Id, Client Secret and Tenant Id. So in your [Azure Portal](https://portal.azure.com/) move into Azure Active Directory, and open `App registrations` from left pane, And add a new registration.
 ![Image description](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/4p1bc3pibj9hfog28oef.png)
 - Add your App details and register.
@@ -97,7 +181,23 @@ Ohhhhh!!!! ERROR AGAIN!!!!
 
 But we are still left with some more code :P
 We need to add variables.tf file mentioning about these variables.
-{% gist https://gist.github.com/aniketkumarsinha/e053e78122d4683567ad1327c818cea6.js %}
+```
+variable "client_id" {
+  type = string
+}
+
+variable "client_secret" {
+  type = string
+}
+
+variable "subscription_id" {
+  type = string
+}
+
+variable "tenant_id" {
+  type = string
+}
+```
 
 
 And now finally we can get the results from Plan and Apply phase. Let's rerun the pipeline.
